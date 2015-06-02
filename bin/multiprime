@@ -1,0 +1,28 @@
+#!/usr/bin/ruby
+
+require "optparse"
+
+options = { count: 0 }
+OptionParser.new do |opts|
+
+  opts.banner = "Usage: multiprime [options]"
+
+  opts.on("-c", "--count [N]", Integer, "Amount of prime numbers to multiply") do |n|
+    options[:count] = n
+  end
+
+end.parse!
+
+require "multiprime"
+
+matrix, range = *Multiprime.table(options[:count])
+
+print "        "
+range.each {|i| print "%-3d  " % i}
+print "\n\n"
+
+matrix.each_with_index do |row, index|
+  print "%-8d" % range[index]
+  row.each {|i| print "%-3d  " % i}
+  print "\n"
+end
